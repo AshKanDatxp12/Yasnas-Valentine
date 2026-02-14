@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Yasna 💜</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #e6d6ff, #d6ecff);
+    overflow:hidden;
+    position:relative;
+}
+
+/* Floating Hearts Background */
+.heart{
+    position:absolute;
+    color:rgba(255, 0, 100, 0.07);
+    animation: float 20s linear infinite;
+    user-select:none;
+}
+
+@keyframes float{
+    from{ transform: translateY(100vh) rotate(0deg); }
+    to{ transform: translateY(-10vh) rotate(360deg); }
+}
+
+.container{
+    text-align:center;
+    z-index:2;
+    opacity:0;
+    transform:translateY(20px);
+    transition:1s ease;
+}
+
+.container.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+h1{
+    font-size:48px;
+    font-weight:800;
+    color:#5e35b1;
+    margin-bottom:50px;
+    padding:0 20px;
+}
+
+.buttons{
+    display:flex;
+    gap:40px;
+    justify-content:center;
+}
+
+button{
+    padding:18px 45px;
+    border:none;
+    border-radius:60px;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.4s ease;
+}
+
+#yesBtn{
+    background:#ff4d88;
+    color:white;
+    box-shadow:0 8px 20px rgba(255,77,136,0.3);
+}
+
+#noBtn{
+    background:#9575cd;
+    color:white;
+    box-shadow:0 8px 20px rgba(149,117,205,0.3);
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+/* Popup */
+.popup{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%) scale(0);
+    transition:0.5s ease;
+    z-index:5;
+}
+
+.popup img{
+    max-width:85vw;
+    max-height:80vh;
+    border-radius:25px;
+    box-shadow:0 15px 50px rgba(0,0,0,0.4);
+}
+
+.popup.show{
+    transform:translate(-50%, -50%) scale(1);
+}
+
+.blur{
+    filter:blur(8px);
+}
+
+</style>
+</head>
+<body>
+
+<div class="container" id="mainContent">
+    <h1>
+        My darling Yasna,<br><br>
+        Would you be my Valentine,<br>
+        would you be my first and last Valentine of my life?
+    </h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes, I will 💖</button>
+        <button id="noBtn">No, I will not 😢</button>
+    </div>
+</div>
+
+<div class="popup" id="popup">
+    <img src="your-image.jpg">
+</div>
+
+<script>
+const container = document.getElementById("mainContent");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const popup = document.getElementById("popup");
+
+let noClicks = 0;
+
+// Fade in
+setTimeout(()=> {
+    container.classList.add("show");
+}, 500);
+
+// Generate floating hearts
+for(let i=0; i<40; i++){
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = (Math.random()*40 + 15) + "px";
+    heart.style.animationDuration = (Math.random()*15 + 10) + "s";
+    heart.style.opacity = Math.random()*0.15;
+    document.body.appendChild(heart);
+}
+
+// No button logic
+noBtn.addEventListener("click", ()=> {
+    noClicks++;
+
+    if(noClicks >= 3){
+        // Grow YES and move it left
+        yesBtn.style.transform = "scale(2)";
+        yesBtn.style.position = "relative";
+        yesBtn.style.left = "-80px";
+
+        // Show popup
+        popup.classList.add("show");
+        container.classList.add("blur");
+
+        setTimeout(()=>{
+            popup.classList.remove("show");
+            container.classList.remove("blur");
+            noClicks = 0;
+            yesBtn.style.transform = "scale(1)";
+            yesBtn.style.left = "0px";
+        },3000);
+    }
+});
+
+yesBtn.addEventListener("click", ()=>{
+    alert("You just made me the happiest man alive 💜");
+});
+</script>
+
+</body>
+</html>
